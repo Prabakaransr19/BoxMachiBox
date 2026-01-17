@@ -226,3 +226,95 @@ Qualifying Data → Feature Engineering → XGBoost Model → Podium Probabiliti
 ⚠️ **No weather integration** - Planned for V4  
 ⚠️ **No race strategy modeling** - Pit stops, tire choice not included  
 ⚠️ **Chaos race underperformance** - Struggles with unpredictable races (e.g., Brazil 2024: Verstappen P17→P1)
+
+---
+
+## 🗺️ Roadmap
+
+### V4 Planned Features
+- [ ] **Weather API Integration** - Real-time weather data and wet-weather skill ratings
+- [ ] **Circuit-Specific Learning** - Per-track historical performance and overtaking success rates
+- [ ] **Race Strategy Modeling** - Pit stop timing, tire degradation prediction
+- [ ] **Two-Stage Architecture** - Separate models for "normal" vs "chaos" races
+- [ ] **Safety Car Probability** - Historical safety car likelihood per circuit
+- [ ] **Target Accuracy:** 96%+
+
+### Future Enhancements
+- [ ] Custom domain deployment (`boxmachibox.app`)
+- [ ] User authentication and prediction history
+- [ ] Real-time race tracking and live updates
+- [ ] Mobile app (iOS/Android)
+- [ ] Multi-language support
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Areas for improvement:
+
+- 🌦️ Add weather API integration
+- 🏁 Implement pit stop strategy predictor
+- 📊 Build race simulation module
+- 🔧 Optimize model for chaos races
+- 📱 Improve mobile responsiveness
+
+**How to contribute:**
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 👏 Acknowledgments
+
+- **FastF1** - F1 telemetry and timing data
+- **Ergast API** - Historical race results (legacy source)
+- **XGBoost Team** - Excellent gradient boosting library
+- **Render & Vercel** - Free-tier deployment platforms
+- **F1 Community** - Testing, feedback, and passion for the sport
+
+---
+
+## 👥 Team
+
+**Built by [Prabakaran](https://github.com/Prabakaransr19) (Frontend) & [Sarvatarshan Sankar](https://github.com/sarva-20) (Backend & Machine Learning)**
+
+**Frontend Development**  
+[Prabakaran](https://github.com/Prabakaransr19) - Next.js UI, design, user experience
+
+**Backend & Machine Learning**  
+[Sarvatarshan Sankar](https://github.com/sarva-20) - XGBoost model, FastAPI, data engineering
+
+---
+
+## ⭐ Star This Project
+
+If you found BoxMachiBox helpful or interesting, please give it a ⭐ on GitHub!
+
+---
+
+## 📞 Support
+
+- **Report Bug:** [GitHub Issues](https://github.com/Prabakaransr19/BoxMachiBox/issues)
+- **Request Feature:** [GitHub Discussions](https://github.com/Prabakaransr19/BoxMachiBox/discussions)
+- **API Status:** [Render Dashboard](https://boxmachibox.onrender.com)
+
+---
+
+**Built with ❤️ for Formula 1 fans and data science enthusiasts.**
+
+*"Box Box Box!" - Predicting podiums, one race at a time.*
+
+---
+
+**Last Updated:** January 18, 2026  
+**Model Version:** Production Ready (XGBoost 2.1.3)  
+**Data Coverage:** 2022-2025 Complete Season (R1-R24)

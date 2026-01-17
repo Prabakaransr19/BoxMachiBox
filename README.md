@@ -55,3 +55,67 @@ In F1, "Box Box Box" is the iconic radio call for pit stops. BoxMachiBox combine
 - `GET /api/model/info` - Model metadata
 
 **⚠️ Note:** Backend runs on Render's free tier - first request after 15min inactivity may take ~30s (cold start).
+
+---
+
+## 🎯 Model Performance
+
+### Metrics (2025 R21-R24 Test Set)
+```
+Accuracy:       93.89%
+Precision:      91.2%  (podium predictions)
+Recall:         89.7%  (actual podiums caught)
+F1-Score:       90.4%
+```
+
+### Training Details
+- **Algorithm:** XGBoost Ensemble (multi-seed)
+- **Training Data:** 1,558 samples (2022-2024 + 2025 R1-R20)
+- **Test Data:** 180 samples (2025 R21-R24)
+- **Features:** 47 engineered features
+- **Model File:** `f1_PRODUCTION_READY.pkl` (XGBoost)
+
+### Feature Categories
+1. **Qualifying Intelligence** (10 features)
+   - Grid position, Q1/Q2/Q3 lap times, gap to pole
+   - Front row start indicator, qualifying performance score
+
+2. **Driver Performance** (10 features)
+   - Last 3/5 races average points/position
+   - Season points, podium count, DNF rate, championship position
+
+3. **Constructor Performance** (8 features)
+   - Team form, constructor standings, reliability
+   - Average qualifying position, top team indicator
+
+4. **Circuit-Specific** (11 features)
+   - Driver wins/podiums at circuit, average finish
+   - Circuit experience, constructor track record
+
+5. **Advanced Metrics** (8 features)
+   - Driver momentum, points gap to leader, must-win pressure
+   - Teammate comparison, consistency score
+
+---
+
+## 🛠️ Tech Stack
+
+### Machine Learning & Backend
+- **Python 3.10+** - Core language
+- **XGBoost 2.1.3** - Gradient boosting model
+- **FastAPI 0.115.6** - RESTful API framework
+- **Pandas & NumPy** - Data processing
+- **Scikit-learn 1.8.0** - ML utilities
+- **FastF1** - F1 telemetry and race data
+- **Uvicorn** - ASGI server
+
+### Frontend
+- **Next.js 15** - React framework
+- **TypeScript** - Type-safe development
+- **Tailwind CSS** - Utility-first styling
+- **Vercel** - Deployment platform
+
+### Data Sources
+- **FastF1 Library** - Complete 2022-2025 season data (R1-R24)
+- **502KB** race results dataset
+- **34KB** qualifying results dataset

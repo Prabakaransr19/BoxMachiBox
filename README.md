@@ -119,3 +119,110 @@ F1-Score:       90.4%
 - **FastF1 Library** - Complete 2022-2025 season data (R1-R24)
 - **502KB** race results dataset
 - **34KB** qualifying results dataset
+
+---
+
+## 📁 Repository Structure
+
+```
+BoxMachiBox/
+│
+├── src/                          # Next.js Frontend
+│   ├── app/                      # App router pages
+│   ├── components/               # React components
+│   ├── lib/                      # Utilities and API
+│   └── types/                    # TypeScript types
+│
+├── public/                       # Static assets
+│
+├── package.json                  # Frontend dependencies
+├── next.config.mjs              # Next.js configuration
+├── tailwind.config.ts           # Tailwind configuration
+├── tsconfig.json                # TypeScript configuration
+├── .gitignore
+├── LICENSE
+└── README.md
+```
+
+**Note:** Backend code (FastAPI + ML models) is maintained in a [separate repository](https://github.com/sarva-20/BoxMachiBox-) by [@sarva-20](https://github.com/sarva-20).
+
+---
+
+## 🚀 Quick Start
+
+### Prerequisites
+- Node.js 18+
+- npm or yarn
+
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/Prabakaransr19/BoxMachiBox.git
+cd BoxMachiBox
+
+# Install dependencies
+npm install
+# or
+yarn install
+
+# Set up environment variables
+# Create .env.local file
+echo "NEXT_PUBLIC_API_URL=https://boxmachibox.onrender.com" > .env.local
+
+# Run development server
+npm run dev
+# or
+yarn dev
+```
+
+The app will be available at `http://localhost:3000`
+
+### Production Build
+
+```bash
+# Build for production
+npm run build
+
+# Start production server
+npm start
+```
+
+---
+
+## 🎮 Using the Web App
+
+1. **Visit** [https://boxmachibox.vercel.app/](https://boxmachibox.vercel.app/)
+2. **Navigate** to "Predict" page
+3. **Select** qualifying grid (P1-P10 drivers)
+4. **Choose** race circuit
+5. **Click** "Predict Podium"
+6. **View** top 3 predicted finishers with probabilities
+
+**Pro Tip:** Check "Insights" page for detailed driver analysis and championship trends!
+
+---
+
+## 🧠 How It Works
+
+### Prediction Pipeline
+```
+Qualifying Data → Feature Engineering → XGBoost Model → Podium Probabilities
+```
+
+1. **Input:** Qualifying grid positions (P1-P10) + circuit selection
+2. **Feature Calculation:** 47 features computed from historical data
+3. **Model Inference:** XGBoost ensemble predicts podium likelihood
+4. **Output:** Top 3 drivers ranked by probability + confidence scores
+
+### Key Insights
+- **Grid Position** has 16% feature importance (strongest predictor)
+- **Constructor Form** contributes 7.9% (team strength matters)
+- **Recent Driver Form** (last 5 races) adds 4.8% predictive power
+- Model achieves **93.89% accuracy** on standard race conditions
+
+### Known Limitations
+⚠️ **Over-reliance on qualifying** - 16% importance on grid position  
+⚠️ **No weather integration** - Planned for V4  
+⚠️ **No race strategy modeling** - Pit stops, tire choice not included  
+⚠️ **Chaos race underperformance** - Struggles with unpredictable races (e.g., Brazil 2024: Verstappen P17→P1)

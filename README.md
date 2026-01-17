@@ -1,4 +1,4 @@
-# 🏎️ BoxMachiBox!
+# 🏎️ BoxMachiBox
 
 **"Predicting podiums before the lights go out."**
 
@@ -125,101 +125,68 @@ F1-Score:       90.4%
 ## 📁 Repository Structure
 
 ```
-BoxMachiBox-/
+BoxMachiBox/
 │
-├── BoxMachiBox-API/              # FastAPI Backend
-│   ├── main.py                   # API endpoints
-│   ├── models/
-│   │   └── f1_model.pkl          # Production XGBoost model
-│   ├── requirements.txt          # Python dependencies
-│   └── Procfile                  # Render deployment config
+├── src/                          # Next.js Frontend
+│   ├── app/                      # App router pages
+│   ├── components/               # React components
+│   ├── lib/                      # Utilities and API
+│   └── types/                    # TypeScript types
 │
-├── f1-predictor-v3-main/         # ML Training & Research
-│   ├── update_model_2025.py      # Data collection script
-│   ├── data/
-│   │   └── raw/
-│   │       ├── race_results_2022_2025_COMPLETE.csv
-│   │       └── qualifying_results_2022_2025_COMPLETE.csv
-│   ├── notebooks/                # Jupyter notebooks
-│   └── models/                   # Training artifacts
+├── public/                       # Static assets
 │
-├── f1_PRODUCTION_READY.pkl       # Production model (root)
+├── package.json                  # Frontend dependencies
+├── next.config.mjs              # Next.js configuration
+├── tailwind.config.ts           # Tailwind configuration
+├── tsconfig.json                # TypeScript configuration
 ├── .gitignore
 ├── LICENSE
 └── README.md
 ```
 
-**Note:** Frontend code (`src/`) is maintained in a [separate repository](https://github.com/YOUR_FRIENDS_REPO) by [@Prabakaran](https://github.com/Prabakaransr19).
-
+**Note:** Backend code (FastAPI + ML models) is maintained in a [separate repository](https://github.com/sarva-20/BoxMachiBox-) by [@sarva-20](https://github.com/sarva-20).
+[LinkedIn](https://www.linkedin.com/in/sarvatarshan20/).
 ---
 
 ## 🚀 Quick Start
 
 ### Prerequisites
-- Python 3.10+
-- pip package manager
-- 4GB RAM minimum
+- Node.js 18+
+- npm or yarn
 
-### Running the Backend Locally
+### Installation
 
 ```bash
 # Clone the repository
-git clone https://github.com/sarva-20/BoxMachiBox-.git
-cd BoxMachiBox-
-
-# Navigate to API folder
-cd BoxMachiBox-API
-
-# Create virtual environment
-python -m venv .venv
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+git clone https://github.com/Prabakaransr19/BoxMachiBox.git
+cd BoxMachiBox
 
 # Install dependencies
-pip install -r requirements.txt
+npm install
+# or
+yarn install
 
-# Run the API
-uvicorn main:app --reload
+# Set up environment variables
+# Create .env.local file
+echo "NEXT_PUBLIC_API_URL=https://boxmachibox.onrender.com" > .env.local
+
+# Run development server
+npm run dev
+# or
+yarn dev
 ```
 
-API will be available at `http://localhost:8000`  
-Interactive docs at `http://localhost:8000/docs`
+The app will be available at `http://localhost:3000`
 
-### Example API Usage
+### Production Build
 
 ```bash
-# Health check
-curl https://boxmachibox.onrender.com/
+# Build for production
+npm run build
 
-# Get all drivers
-curl https://boxmachibox.onrender.com/api/drivers
-
-# Make a prediction
-curl -X POST https://boxmachibox.onrender.com/api/predict \
-  -H "Content-Type: application/json" \
-  -d '{
-    "grid_positions": {
-      "VER": 1, "NOR": 2, "LEC": 3, "SAI": 4, "PIA": 5,
-      "HAM": 6, "RUS": 7, "PER": 8, "ALO": 9, "STR": 10
-    },
-    "circuit": "monaco"
-  }'
+# Start production server
+npm start
 ```
-
----
-
-## 📊 Model Training
-
-The model was trained using complete 2025 season data collected via FastF1:
-
-```python
-# Update model with latest 2025 data
-python f1-predictor-v3-main/update_model_2025.py
-```
-
-**Data Coverage:**
-- **Training:** 2022-2024 complete + 2025 R1-R20 (1,558 samples)
-- **Testing:** 2025 R21-R24 (180 samples)
-- **Total Races:** 87 races × ~20 drivers = 1,738 records
 
 ---
 
@@ -318,11 +285,13 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 ## 👥 Team
 
-**Backend & Machine Learning**  
-[Sarvatarshan Sankar](https://github.com/sarva-20) - XGBoost model, FastAPI, data engineering
+**Built by [Prabakaran](https://github.com/Prabakaransr19) (Frontend) & [Sarvatarshan Sankar](https://github.com/sarva-20) (Backend & Machine Learning)**
 
 **Frontend Development**  
 [Prabakaran](https://github.com/Prabakaransr19) - Next.js UI, design, user experience
+
+**Backend & Machine Learning**  
+[Sarvatarshan Sankar](https://github.com/sarva-20) - XGBoost model, FastAPI, data engineering
 
 ---
 
@@ -334,8 +303,8 @@ If you found BoxMachiBox helpful or interesting, please give it a ⭐ on GitHub!
 
 ## 📞 Support
 
-- **Report Bug:** [GitHub Issues](https://github.com/sarva-20/BoxMachiBox-/issues)
-- **Request Feature:** [GitHub Discussions](https://github.com/sarva-20/BoxMachiBox-/discussions)
+- **Report Bug:** [GitHub Issues](https://github.com/Prabakaransr19/BoxMachiBox/issues)
+- **Request Feature:** [GitHub Discussions](https://github.com/Prabakaransr19/BoxMachiBox/discussions)
 - **API Status:** [Render Dashboard](https://boxmachibox.onrender.com)
 
 ---
@@ -346,6 +315,6 @@ If you found BoxMachiBox helpful or interesting, please give it a ⭐ on GitHub!
 
 ---
 
-**Last Updated:** January 17, 2026  
+**Last Updated:** January 18, 2026  
 **Model Version:** Production Ready (XGBoost 2.1.3)  
 **Data Coverage:** 2022-2025 Complete Season (R1-R24)

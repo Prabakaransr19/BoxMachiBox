@@ -22,3 +22,36 @@ BoxMachiBox is a machine learning system that predicts Formula 1 race podium fin
 
 ### Why "BoxMachiBox"?
 In F1, "Box Box Box" is the iconic radio call for pit stops. BoxMachiBox combines this with "machine" — representing the fusion of motorsport strategy and machine learning intelligence.
+
+---
+
+## ✨ Key Features
+
+| Feature | Description |
+|---------|-------------|
+| **🎯 93.89% Accuracy** | Validated on complete 2025 season data (R21-R24 test set) |
+| **🧠 47 Engineered Features** | Qualifying intelligence, driver momentum, constructor strength, circuit mastery |
+| **⚡ Real-time API** | FastAPI backend deployed on Render with interactive Swagger docs |
+| **🎨 Modern Web Interface** | Next.js frontend with dark F1 aesthetic and responsive design |
+| **📈 Live Standings** | Current 2025 championship standings integrated |
+| **💡 Race Insights** | Driver analysis, team performance, and strategic predictions |
+
+---
+
+## 🚀 Live Application
+
+**Frontend (Next.js):** [https://boxmachibox.vercel.app/](https://boxmachibox.vercel.app/)
+- 🏠 Home - Project overview and introduction
+- 🎯 Predict - Interactive race prediction form
+- 📊 Standings - 2025 championship leaderboard
+- 👤 Drivers - Driver profiles and statistics
+- 💡 Insights - Race analysis and trends
+
+**Backend API:** [boxmachibox.onrender.com](https://boxmachibox.onrender.com)
+- `POST /api/predict` - Generate podium predictions
+- `GET /api/drivers` - List all F1 drivers
+- `GET /api/circuits` - List all race circuits
+- `GET /api/standings/2025` - Championship standings
+- `GET /api/model/info` - Model metadata
+
+**⚠️ Note:** Backend runs on Render's free tier - first request after 15min inactivity may take ~30s (cold start).

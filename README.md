@@ -145,7 +145,7 @@ BoxMachiBox/
 ```
 
 **Note:** Backend code (FastAPI + ML models) is maintained in a [separate repository](https://github.com/sarva-20/BoxMachiBox-) by [@sarva-20](https://github.com/sarva-20).
-
+[LinkedIn](https://www.linkedin.com/in/sarvatarshan20/).
 ---
 
 ## 🚀 Quick Start

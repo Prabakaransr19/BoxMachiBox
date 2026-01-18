@@ -17,6 +17,7 @@ import {
     ChevronDown
 } from "lucide-react";
 import { useState } from "react";
+import { PitCrew } from "@/components/pit-crew";
 
 const FadeIn = ({ children, delay = 0, className = "" }: { children: React.ReactNode, delay?: number, className?: string }) => (
     <motion.div
@@ -295,6 +296,8 @@ export const InsightsView = () => {
             <div className="text-center mt-12 text-xs text-neutral-600">
                 Model continuously trained. Last updated: January 2025.
             </div>
+
+            <PitCrew />
         </div>
     );
 };

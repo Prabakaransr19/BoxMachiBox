@@ -54,101 +54,95 @@ const transcript: RadioMessage[] = [
         id: 1,
         timestamp: "00:12",
         speaker: "Backend",
-        role: "Chief Engineer",
-        speakerName: "Prabakaran",
-        message: "Box box, we have the prediction engine ready for deployment."
+        role: "ML Engineer",
+        speakerName: "Sarvatharshan",
+        message: "Box box, predictive models are converged and deployed to the backend."
     },
     {
         id: 2,
         timestamp: "00:18",
-        speaker: "Data",
-        role: "Race Engineer",
-        speakerName: "System",
-        message: "Copy that, XGBoost model running at 93.89% accuracy."
+        speaker: "Frontend",
+        role: "Chief Engineer",
+        speakerName: "Prabakaran",
+        message: "Copy that Sarva. Connecting the dashboard to your API endpoints now."
     },
     {
         id: 3,
         timestamp: "00:24",
-        speaker: "Frontend",
-        role: "Lead Mechanic",
-        speakerName: "UI Team",
-        message: "Visuals are pushing hard, lap times looking good on the render."
+        speaker: "Backend",
+        role: "ML Engineer",
+        speakerName: "Sarvatharshan",
+        message: "Telemetry streams are stable. The new XGBoost weights are looking solid."
     },
     {
         id: 4,
         timestamp: "00:30",
-        speaker: "Backend",
+        speaker: "Frontend",
         role: "Chief Engineer",
         speakerName: "Prabakaran",
-        message: "Fantastic work team, API response times are lightning fast."
+        message: "Visuals are green. Data binding is complete. We are ready for lights out."
     },
     {
         id: 5,
         timestamp: "00:35",
-        speaker: "Data",
-        role: "Race Engineer",
-        speakerName: "System",
-        message: "Confirmed, seeing zero errors on the telemetry stream."
+        speaker: "Backend",
+        role: "ML Engineer",
+        speakerName: "Sarvatharshan",
+        message: "Server latency is minimal. Let's push this release."
     },
     {
         id: 6,
         timestamp: "00:42",
         speaker: "Frontend",
-        role: "Lead Mechanic",
-        speakerName: "UI Team",
-        message: "Dashboard is pixel-perfect, ready for the green flag."
+        role: "Chief Engineer",
+        speakerName: "Prabakaran",
+        message: "Deploying production build. Great work on the engine mate."
     },
     {
         id: 7,
         timestamp: "00:48",
         speaker: "Backend",
-        role: "Chief Engineer",
-        speakerName: "Prabakaran",
-        message: "And that's P1 for BoxMachiBox! Outstanding collaboration!"
+        role: "ML Engineer",
+        speakerName: "Sarvatharshan",
+        message: "And that's a sophisticated platform! Double points finish."
     }
 ];
 
 const developers: Developer[] = [
     {
         name: "Prabakaran",
-        role: "Full Stack Lead",
-        specialty: "System Architecture",
-        achievement: "Orchestrated the entire Box Machi Box platform",
-        techStack: ["Next.js", "Python", "FastAPI", "Tailwind"],
-        base: "Chennai, India",
+        role: "Full Stack & UI Lead",
+        specialty: "Frontend Architecture",
+        achievement: "Crafted the immersive Box Machi Box experience",
+        techStack: ["Next.js", "React", "Tailwind", "Framer Motion"],
+        base: "Coimbatore, India",
         coffee: "Filter Coffee",
         favoriteDriver: "Lewis Hamilton",
         socials: {
-            github: "#",
-            linkedin: "#",
-            twitter: "#"
+            github: "https://github.com/Prabakaransr19",
+            linkedin: "https://www.linkedin.com/in/prabakaransr19/"
         },
-        avatarColor: "bg-blue-600",
-        messages: [] // Not used in card map, just for type
+        avatarColor: "bg-red-600",
+        messages: []
     },
     {
-        name: "Box Machi Box AI",
-        role: "Predictive Model",
-        specialty: "Race Strategy & Outcomes",
-        achievement: "Achieved 93.89% accuracy on 2024 holdout set",
-        techStack: ["XGBoost", "Scikit Level", "Pandas", "NumPy"],
-        base: "The Cloud",
-        coffee: "High Octane Fuel",
+        name: "Sarvatharshan Shankar",
+        role: "ML & Backend Lead",
+        specialty: "Predictive Intelligence",
+        achievement: "Architected the 93.89% accuracy prediction engine",
+        techStack: ["Python", "FastAPI", "XGBoost", "TensorFlow"],
+        base: "Coimbatore, India",
+        coffee: "Espresso",
         favoriteDriver: "Max Verstappen",
-        socials: {},
-        avatarColor: "bg-red-600",
+        socials: {
+            github: "https://github.com/sarva-20",
+            linkedin: "https://www.linkedin.com/in/sarvatarshan20/"
+        },
+        avatarColor: "bg-blue-600",
         messages: []
     }
 ];
 
-const teamStats = [
-    { icon: Clock, label: "Combined Experience", value: "5+ Years" },
-    { icon: Terminal, label: "Total Commits", value: "847" },
-    { icon: Coffee, label: "Coffee Consumed", value: "Infinite ☕" },
-    { icon: Bug, label: "Bugs Squashed", value: "Too Many" },
-    { icon: Zap, label: "Deployments", value: "42" },
-    { icon: Activity, label: "Fastest Debug", value: "12 mins" },
-];
 
 export const PitCrew = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -279,19 +273,16 @@ export const PitCrew = () => {
                                             initial={{ opacity: 0, x: -10 }}
                                             animate={{ opacity: 1, x: 0 }}
                                             transition={{ delay: i * 0.15 + 0.3 }}
-                                            className={`bg-neutral-800/50 rounded-lg p-4 border-l-4 ${msg.speaker === "Backend" ? "border-blue-500" :
-                                                    msg.speaker === "Frontend" ? "border-red-500" : "border-green-500"
+                                            className={`bg-neutral-800/50 rounded-lg p-4 border-l-4 ${msg.speaker === "Backend" ? "border-orange-500" : "border-purple-500"
                                                 }`}
                                         >
                                             <div className="flex items-center gap-2 mb-1">
                                                 <span className="text-xs text-neutral-500 font-mono">[{msg.timestamp}]</span>
-                                                <span className={`text-xs font-bold uppercase tracking-wider flex items-center gap-1 ${msg.speaker === "Backend" ? "text-blue-400" :
-                                                        msg.speaker === "Frontend" ? "text-red-400" : "text-green-400"
+                                                <span className={`text-xs font-bold uppercase tracking-wider flex items-center gap-1 ${msg.speaker === "Backend" ? "text-orange-400" : "text-purple-400"
                                                     }`}>
                                                     {msg.speaker === "Backend" && "🔧"}
                                                     {msg.speaker === "Frontend" && "🎨"}
-                                                    {msg.speaker === "Data" && "📊"}
-                                                    {msg.role}
+                                                    {msg.speakerName}
                                                 </span>
                                             </div>
                                             <p className="text-neutral-300 italic">
@@ -341,6 +332,10 @@ export const PitCrew = () => {
                                                     <span className="text-neutral-500">Fuel</span>
                                                     <span className="text-neutral-300">{dev.coffee}</span>
                                                 </div>
+                                                <div className="flex justify-between border-b border-neutral-800 pb-2">
+                                                    <span className="text-neutral-500">Fav Driver</span>
+                                                    <span className="text-neutral-300">{dev.favoriteDriver}</span>
+                                                </div>
 
                                                 <div className="pt-2">
                                                     <span className="text-xs text-neutral-500 block mb-1">ACHIEVEMENT UNLOCKED 🏆</span>
@@ -369,20 +364,6 @@ export const PitCrew = () => {
                                             )}
                                         </motion.div>
                                     ))}
-                                </div>
-
-                                {/* 3. Team Stats */}
-                                <div className="mt-12 bg-neutral-900/50 rounded-xl p-6 border border-neutral-800">
-                                    <h3 className="text-xs font-bold text-neutral-500 uppercase tracking-widest mb-6 text-center">Team Telemetry</h3>
-                                    <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-                                        {teamStats.map((stat, i) => (
-                                            <div key={i} className="flex flex-col items-center text-center">
-                                                <stat.icon className="w-5 h-5 text-red-500 mb-2" />
-                                                <div className="text-lg font-bold text-white">{stat.value}</div>
-                                                <div className="text-xs text-neutral-500">{stat.label}</div>
-                                            </div>
-                                        ))}
-                                    </div>
                                 </div>
 
                                 <div className="mt-12 text-center">

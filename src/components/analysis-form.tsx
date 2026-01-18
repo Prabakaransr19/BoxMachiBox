@@ -228,13 +228,13 @@ export const AnalysisForm = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className="space-y-3">
                     <label className="text-sm text-neutral-400 font-medium block">Recent Form</label>
-                    <div className="grid grid-cols-2 gap-2">
+                    <div className="grid grid-cols-2 gap-3">
                         {['Excellent', 'Good', 'Average', 'Poor'].map((level) => (
                             <button
                                 key={level}
                                 type="button"
                                 onClick={() => handleChange("recent_form", level)}
-                                className={`p-2 text-sm border rounded transition-colors ${formData.recent_form === level
+                                className={`h-12 text-sm border rounded transition-colors ${formData.recent_form === level
                                     ? 'bg-bmb-accent-cyan/20 border-bmb-accent-cyan text-white'
                                     : 'border-neutral-800 text-neutral-500 hover:border-neutral-600'
                                     }`}
@@ -247,13 +247,13 @@ export const AnalysisForm = () => {
 
                 <div className="space-y-3">
                     <label className="text-sm text-neutral-400 font-medium block">Track Conditions</label>
-                    <div className="flex gap-2">
+                    <div className="grid grid-cols-3 gap-3">
                         {['Dry', 'Mixed', 'Wet'].map((cond) => (
                             <button
                                 key={cond}
                                 type="button"
                                 onClick={() => handleChange("weather", cond)}
-                                className={`flex-1 p-2 text-sm border rounded transition-colors ${formData.weather === cond
+                                className={`h-12 text-sm border rounded transition-colors ${formData.weather === cond
                                     ? 'bg-blue-500/20 border-blue-500 text-white'
                                     : 'border-neutral-800 text-neutral-500 hover:border-neutral-600'
                                     }`}
@@ -265,16 +265,16 @@ export const AnalysisForm = () => {
                 </div>
             </div>
 
-            <div className="pt-6">
+            <div className="pt-6 sticky bottom-0 z-20 bg-gradient-to-t from-bmb-bg via-bmb-bg to-transparent pb-4 -mx-6 px-6 md:static md:bg-none md:p-0 md:mx-0">
                 <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full h-14 bg-bmb-accent-red hover:bg-red-600 disabled:bg-neutral-800 text-white font-bold tracking-wide rounded transition-all flex items-center justify-center gap-2 group"
+                    className="w-full h-14 bg-bmb-accent-red hover:bg-red-600 disabled:bg-neutral-800 text-white font-bold tracking-wide rounded transition-all flex items-center justify-center gap-2 group shadow-lg"
                 >
                     {isSubmitting ? (
                         <>
                             <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                            PROCESSING TELEMETRY...
+                            PROCESSING...
                         </>
                     ) : (
                         <>
@@ -284,6 +284,6 @@ export const AnalysisForm = () => {
                     )}
                 </button>
             </div>
-        </motion.form>
+        </motion.form >
     );
 };

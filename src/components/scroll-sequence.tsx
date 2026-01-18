@@ -49,14 +49,14 @@ const FeatureItem = ({
         [50, -50]
     );
 
-    let alignClass = "items-start text-left left-10 md:left-20";
-    if (feature.alignment === "right") alignClass = "items-end text-right right-10 md:right-20";
-    if (feature.alignment === "center") alignClass = "items-center text-center left-0 right-0 mx-auto";
+    let alignClass = "items-center md:items-start text-center md:text-left left-0 right-0 md:right-auto md:left-20 mx-auto md:mx-0 px-6 md:px-0";
+    if (feature.alignment === "right") alignClass = "items-center md:items-end text-center md:text-right left-0 right-0 md:left-auto md:right-20 mx-auto md:mx-0 px-6 md:px-0";
+    if (feature.alignment === "center") alignClass = "items-center text-center left-0 right-0 mx-auto px-6";
 
     return (
         <motion.div
             style={{ opacity, y }}
-            className={`absolute top-1/2 -translate-y-1/2 max-w-sm md:max-w-md flex flex-col pointer-events-none z-20 ${alignClass}`}
+            className={`absolute top-1/2 -translate-y-1/2 w-full md:max-w-md flex flex-col pointer-events-none z-20 ${alignClass}`}
         >
             <span className="text-bmb-accent-cyan text-xs md:text-sm font-mono tracking-widest mb-2 border-b border-bmb-accent-cyan/30 pb-1">
                 SYSTEM CHECK // {feature.title}
@@ -99,19 +99,19 @@ export const ScrollSequence = () => {
                 >
                     {/* Logo removed from here */}
 
-                    <div className="max-w-4xl text-center mt-20">
-                        <h2 className="text-5xl md:text-7xl lg:text-9xl font-bold tracking-tight text-white mb-6">
+                    <div className="max-w-4xl text-center mt-20 px-4">
+                        <h2 className="text-3xl md:text-7xl lg:text-9xl font-bold tracking-tight text-white mb-4 md:mb-6">
                             PRECISION <br />
-                            <span className="text-5xl md:text-7xl lg:text-9xl font-bold tracking-tight text-white mb-6">
+                            <span className="text-3xl md:text-7xl lg:text-9xl font-bold tracking-tight text-white mb-6">
                                 ENGINEERING
                             </span>
                         </h2>
-                        <p className="text-lg md:text-xl text-neutral-400 max-w-2xl mx-auto mb-10 leading-relaxed">
+                        <p className="text-base md:text-xl text-neutral-400 max-w-2xl mx-auto mb-8 md:mb-10 leading-relaxed">
                             The next generation of Formula 1 analytics.
                             Real-time insights, predictive modeling, and granular car telemetry.
                         </p>
-                        <Link href="/analyze">
-                            <button className="group relative inline-flex h-12 items-center justify-center overflow-hidden rounded-md bg-neutral-900 px-8 font-medium text-neutral-200 transition-all duration-300 hover:bg-neutral-800 hover:text-white border border-neutral-800 hover:border-bmb-accent-cyan/50">
+                        <Link href="/analyze" className="block w-full md:w-auto">
+                            <button className="w-full md:w-auto group relative inline-flex h-12 md:h-12 items-center justify-center overflow-hidden rounded-md bg-neutral-900 px-8 py-3 font-medium text-neutral-200 transition-all duration-300 hover:bg-neutral-800 hover:text-white border border-neutral-800 hover:border-bmb-accent-cyan/50 text-sm md:text-base">
                                 <span className="mr-2">Go to Analysis</span>
                                 <span className="group-hover:translate-x-1 transition-transform duration-300">→</span>
                             </button>

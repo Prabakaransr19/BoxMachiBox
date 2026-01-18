@@ -18,11 +18,11 @@ export const StandingsView = ({ drivers, teams }: StandingsViewProps) => {
     return (
         <div className="w-full max-w-5xl mx-auto px-4 pb-20">
             {/* Tabs */}
-            <div className="flex justify-center mb-10">
-                <div className="flex p-1 bg-neutral-900 rounded-lg border border-neutral-800">
+            <div className="flex justify-center mb-6 md:mb-10">
+                <div className="flex w-full md:w-auto p-1 bg-neutral-900 rounded-lg border border-neutral-800">
                     <button
                         onClick={() => setActiveTab("drivers")}
-                        className={`px-8 py-2 rounded-md font-medium text-sm transition-all duration-300 ${activeTab === "drivers"
+                        className={`flex-1 md:flex-none px-4 md:px-8 py-3 md:py-2 rounded-md font-medium text-sm transition-all duration-300 ${activeTab === "drivers"
                             ? "bg-bmb-accent-cyan text-black shadow-lg shadow-bmb-accent-cyan/20"
                             : "text-neutral-400 hover:text-white"
                             }`}
@@ -31,7 +31,7 @@ export const StandingsView = ({ drivers, teams }: StandingsViewProps) => {
                     </button>
                     <button
                         onClick={() => setActiveTab("teams")}
-                        className={`px-8 py-2 rounded-md font-medium text-sm transition-all duration-300 ${activeTab === "teams"
+                        className={`flex-1 md:flex-none px-4 md:px-8 py-3 md:py-2 rounded-md font-medium text-sm transition-all duration-300 ${activeTab === "teams"
                             ? "bg-bmb-accent-cyan text-black shadow-lg shadow-bmb-accent-cyan/20"
                             : "text-neutral-400 hover:text-white"
                             }`}

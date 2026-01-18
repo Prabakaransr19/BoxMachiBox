@@ -6,19 +6,19 @@ import { motion } from "framer-motion";
 const navItems = [
     {
         title: "Analyze",
-        description: "Deep dive into race telemetry, lap times, and sector performance.",
+        description: "Deep dive into telemetry, lap times, and sector performance. Get the real data, machi.",
         href: "/analyze",
         gradient: "from-bmb-white to-bmb-accent-cyan",
     },
     {
         title: "Standings",
-        description: "Track driver and constructor championship progression in real-time.",
+        description: "Track the championship battle. Driver and constructor points in real-time.",
         href: "/standings",
         gradient: "from-bmb-white to-purple-400",
     },
     {
         title: "Driver Info",
-        description: "Comprehensive profiles, career stats, and head-to-head comparisons.",
+        description: "Comprehensive profiles and stats. Know the heroes behind the wheel.",
         href: "/driver-info",
         gradient: "from-bmb-white to-amber-400",
     },
@@ -26,9 +26,9 @@ const navItems = [
 
 export const FeatureNavigation = () => {
     return (
-        <section className="w-full bg-bmb-bg py-24 px-6 border-b border-neutral-900">
+        <section className="w-full bg-bmb-bg py-12 md:py-24 px-4 md:px-6 border-b border-neutral-900">
             <div className="max-w-7xl mx-auto">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
                     {navItems.map((item, index) => (
                         <Link key={item.title} href={item.href} className="group">
                             <motion.div
@@ -36,7 +36,7 @@ export const FeatureNavigation = () => {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.5, delay: index * 0.1 }}
                                 viewport={{ once: true }}
-                                className="h-full p-8 border border-neutral-800 rounded-lg bg-neutral-900/20 backdrop-blur-sm transition-all duration-300 hover:border-neutral-600 hover:bg-neutral-900/40 hover:-translate-y-1"
+                                className="h-full p-6 md:p-8 border border-neutral-800 rounded-lg bg-neutral-900/20 backdrop-blur-sm transition-all duration-300 hover:border-neutral-600 hover:bg-neutral-900/40 hover:-translate-y-1"
                             >
                                 <div className="flex flex-col h-full justify-between">
                                     <div>

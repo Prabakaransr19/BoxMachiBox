@@ -20,12 +20,12 @@ export const DriverProfile = ({ driver, history }: DriverProfileProps) => {
             </div>
 
             {/* Hero Section */}
-            <div className="relative overflow-hidden rounded-2xl border border-neutral-800 bg-neutral-900/50 backdrop-blur-md p-8 md:p-12 mb-8">
+            <div className="relative overflow-hidden rounded-2xl border border-neutral-800 bg-neutral-900/50 backdrop-blur-md p-6 md:p-12 mb-8">
                 <div
                     className="absolute top-0 right-0 w-32 h-full opacity-10 -skew-x-12 translate-x-12"
                     style={{ backgroundColor: driver.team_colour }}
                 />
-                <div className="absolute top-4 right-8 text-[12rem] font-black text-white/5 pointer-events-none select-none leading-none -tracking-widest">
+                <div className="absolute top-4 right-8 text-[6rem] md:text-[12rem] font-black text-white/5 pointer-events-none select-none leading-none -tracking-widest">
                     {driver.driver_number}
                 </div>
 
@@ -46,7 +46,7 @@ export const DriverProfile = ({ driver, history }: DriverProfileProps) => {
                         <div className="text-bmb-accent-cyan font-mono text-sm tracking-widest mb-2 uppercase">
                             {driver.team_name}
                         </div>
-                        <h1 className="text-4xl md:text-6xl font-bold text-white tracking-tight mb-2">
+                        <h1 className="text-3xl md:text-6xl font-bold text-white tracking-tight mb-2">
                             {driver.driver_name}
                         </h1>
                         <div className="flex flex-wrap gap-4 justify-center md:justify-start">
@@ -98,7 +98,7 @@ export const DriverProfile = ({ driver, history }: DriverProfileProps) => {
                 </div>
                 <div className="divide-y divide-neutral-800">
                     {history.length > 0 ? history.map((race, i) => (
-                        <div key={i} className="px-6 py-4 flex items-center justify-between hover:bg-white/5 transition-colors">
+                        <div key={i} className="px-4 md:px-6 py-4 flex items-center justify-between hover:bg-white/5 transition-colors">
                             <div>
                                 <div className="text-white font-medium">{race.location}</div>
                                 <div className="text-xs text-neutral-500">{new Date(race.date).toLocaleDateString()}</div>

@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 export const NarrativeBridge = () => {
     return (
-        <section className="relative w-full bg-bmb-bg py-24 md:py-32 flex flex-col items-center justify-center border-t border-neutral-900/50">
+        <section className="relative w-full bg-bmb-bg py-16 md:py-32 flex flex-col items-center justify-center border-t border-neutral-900/50">
             <div className="container mx-auto px-6 max-w-[1000px] text-center">
                 {/* Title */}
                 <motion.h2
@@ -12,9 +12,9 @@ export const NarrativeBridge = () => {
                     whileInView={{ opacity: 1 }}
                     transition={{ duration: 0.8, delay: 0 }}
                     viewport={{ once: true, margin: "-100px" }}
-                    className="text-3xl md:text-4xl font-bold text-white mb-6 md:mb-8 tracking-tight"
+                    className="text-2xl md:text-5xl font-bold text-white mb-6 md:mb-8 tracking-tight"
                 >
-                    After the Chequered Flag
+                    Predicting Podiums Before the Lights Go Out
                 </motion.h2>
 
                 {/* Subtitle */}
@@ -23,9 +23,9 @@ export const NarrativeBridge = () => {
                     whileInView={{ opacity: 1 }}
                     transition={{ duration: 0.8, delay: 0.2 }}
                     viewport={{ once: true }}
-                    className="text-lg md:text-xl font-medium text-neutral-400 mb-8 md:mb-10"
+                    className="text-lg md:text-2xl font-medium text-bmb-accent-cyan mb-8 md:mb-10"
                 >
-                    When the race ends, the analysis begins.
+                    Box for the winning strategy, Machi!
                 </motion.p>
 
                 {/* Body Copy */}
@@ -36,7 +36,7 @@ export const NarrativeBridge = () => {
                     viewport={{ once: true }}
                     className="text-base md:text-lg text-neutral-300 max-w-[700px] mx-auto leading-relaxed mb-12 md:mb-16"
                 >
-                    Every lap, stint, and position change is preserved in telemetry. We break it down to reveal pace, consistency, and decisions that shaped the result.
+                    Why wait for the chequered flag? We analyze every sector, tyre compound, and strategy call to reveal the race winner before it happens. Pure data, no drama.
                 </motion.p>
 
                 {/* Three Pillars */}
@@ -45,13 +45,13 @@ export const NarrativeBridge = () => {
                     whileInView={{ opacity: 1 }}
                     transition={{ duration: 0.8, delay: 0.6 }}
                     viewport={{ once: true }}
-                    className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 text-sm text-neutral-500 font-mono tracking-widest uppercase"
+                    className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-8 text-sm text-neutral-500 font-mono tracking-widest uppercase"
                 >
-                    <span>Pace</span>
+                    <span>Predict</span>
                     <span className="hidden md:inline text-neutral-700">•</span>
-                    <span>Strategy</span>
+                    <span>Analyze</span>
                     <span className="hidden md:inline text-neutral-700">•</span>
-                    <span>Consistency</span>
+                    <span>Dominate</span>
                 </motion.div>
             </div>
         </section>

@@ -65,19 +65,19 @@ export const InsightsView = () => {
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                         <div className="p-4 bg-neutral-950/50 rounded-lg">
                             <div className="text-xs text-neutral-500 font-mono mb-2">ALGORITHM</div>
-                            <div className="text-lg font-bold text-white">XGBoost Ensemble</div>
+                            <div className="text-xl md:text-lg font-bold text-white">XGBoost Ens.</div>
                         </div>
                         <div className="p-4 bg-neutral-950/50 rounded-lg">
-                            <div className="text-xs text-neutral-500 font-mono mb-2">TRAINING SAMPLES</div>
-                            <div className="text-lg font-bold text-white">1,558 Races</div>
+                            <div className="text-xs text-neutral-500 font-mono mb-2">TRAINING</div>
+                            <div className="text-xl md:text-lg font-bold text-white">1,558 Races</div>
                         </div>
                         <div className="p-4 bg-neutral-950/50 rounded-lg">
                             <div className="text-xs text-neutral-500 font-mono mb-2">FEATURES</div>
-                            <div className="text-lg font-bold text-white">47 Engineered</div>
+                            <div className="text-xl md:text-lg font-bold text-white">47 Eng.</div>
                         </div>
                         <div className="p-4 bg-neutral-950/50 rounded-lg border-l-2 border-green-500">
-                            <div className="text-xs text-neutral-500 font-mono mb-2">TEST ACCURACY</div>
-                            <div className="text-lg font-bold text-green-400">93.89%</div>
+                            <div className="text-xs text-neutral-500 font-mono mb-2">ACCURACY</div>
+                            <div className="text-xl md:text-lg font-bold text-green-400">93.89%</div>
                         </div>
                     </div>
                 </div>
@@ -211,7 +211,7 @@ export const InsightsView = () => {
                 <h2 className="text-2xl font-bold text-white mb-10 text-center">Training Pipeline</h2>
                 <div className="relative max-w-4xl mx-auto">
                     {/* Vertical Line */}
-                    <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-neutral-800" />
+                    <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-0.5 bg-neutral-800" />
 
                     {[
                         { title: "Data Collection", desc: "Ingesting telemetry from 2022-2025 official sources.", icon: Database },
@@ -222,12 +222,12 @@ export const InsightsView = () => {
                     ].map((step, i) => (
                         <FadeIn key={i} delay={i * 0.1} className={`relative flex items-center md:justify-between mb-8 ${i % 2 === 0 ? "md:flex-row-reverse" : ""}`}>
                             <div className="hidden md:block w-5/12" />
-                            <div className="absolute left-4 md:left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-neutral-900 border-2 border-bmb-accent-cyan z-10 flex items-center justify-center">
-                                <step.icon className="w-4 h-4 text-bmb-accent-cyan" />
+                            <div className="absolute left-6 md:left-1/2 -translate-x-1/2 w-12 h-12 rounded-full bg-neutral-900 border-2 border-bmb-accent-cyan z-10 flex items-center justify-center">
+                                <step.icon className="w-6 h-6 text-bmb-accent-cyan" />
                             </div>
-                            <div className="ml-12 md:ml-0 w-full md:w-5/12 pl-4 md:pl-0 md:text-center p-4 bg-neutral-900/30 border border-neutral-800 rounded-lg">
-                                <h3 className="text-white font-bold text-sm">{step.title}</h3>
-                                <p className="text-xs text-neutral-500 mt-1">{step.desc}</p>
+                            <div className="ml-16 md:ml-0 w-full md:w-5/12 pl-4 md:pl-0 md:text-center p-6 bg-neutral-900/30 border border-neutral-800 rounded-lg">
+                                <h3 className="text-white font-bold text-lg">{step.title}</h3>
+                                <p className="text-sm text-neutral-500 mt-1">{step.desc}</p>
                             </div>
                         </FadeIn>
                     ))}

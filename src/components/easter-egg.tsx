@@ -56,7 +56,7 @@ export const EasterEgg = () => {
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
                         onClick={startRace}
-                        className="fixed z-50 w-12 h-12 bg-bmb-accent-red/80 hover:bg-bmb-accent-red rounded-full flex items-center justify-center shadow-lg border border-white/20 backdrop-blur-sm cursor-pointer"
+                        className="fixed z-50 w-12 h-12 bg-bmb-accent-red/80 hover:bg-bmb-accent-red rounded-full hidden md:flex items-center justify-center shadow-lg border border-white/20 backdrop-blur-sm cursor-pointer"
                         style={{ top: position.top, right: position.right }}
                     >
                         <span className="text-xl">🏎️</span>

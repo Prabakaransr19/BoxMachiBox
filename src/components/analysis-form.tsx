@@ -28,16 +28,34 @@ export const AnalysisForm = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                // Parallel fetch
-                const [driverRes, circuitRes] = await Promise.all([
-                    fetch(`${API_BASE}/drivers`),
-                    fetch(`${API_BASE}/circuits`)
+                // Helper for fallback logic
+                const fetchWithFallback = async (endpoint: string, type: 'drivers' | 'circuits') => {
+                    try {
+                        const res = await fetch(`${API_BASE}/${endpoint}/enhanced`);
+                        if (!res.ok) throw new Error("Enhanced endpoint failed");
+                        const data = await res.json();
+
+                        // Transform object data to strings if needed
+                        if (type === 'drivers' && data.drivers && data.drivers.length > 0 && typeof data.drivers[0] === 'object') {
+                            return { drivers: data.drivers.map((d: any) => d.name) };
+                        }
+                        if (type === 'circuits' && data.circuits && data.circuits.length > 0 && typeof data.circuits[0] === 'object') {
+                            return { circuits: data.circuits.map((c: any) => c.name) };
+                        }
+                        return data;
+                    } catch (err) {
+                        // Fallback to basic
+                        const res = await fetch(`${API_BASE}/${endpoint}`);
+                        if (!res.ok) throw new Error(`Basic ${endpoint} endpoint failed`);
+                        return await res.json();
+                    }
+                };
+
+                // Parallel fetch with individual fallbacks
+                const [dData, cData] = await Promise.all([
+                    fetchWithFallback("drivers", "drivers"),
+                    fetchWithFallback("circuits", "circuits")
                 ]);
-
-                if (!driverRes.ok || !circuitRes.ok) throw new Error("Failed to fetch reference data");
-
-                const dData = await driverRes.json();
-                const cData = await circuitRes.json();
 
                 // API returns { count: number, drivers: string[] }
                 setDrivers(dData.drivers || []);

@@ -83,7 +83,7 @@ export const ScrollSequence = () => {
     const heroPointerEvents = useTransform(scrollYProgress, (val) => val > 0.9 ? "none" : "auto");
 
     return (
-        <section ref={containerRef} className="relative h-[400vh] bg-bmb-bg">
+        <section ref={containerRef} className="relative h-[250vh] md:h-[400vh] bg-bmb-bg">
             <div className="sticky top-0 h-screen w-full overflow-hidden">
                 {/* Canvas Layer */}
                 <div className="absolute inset-0 z-0">

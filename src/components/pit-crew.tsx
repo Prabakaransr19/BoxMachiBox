@@ -110,22 +110,6 @@ const transcript: RadioMessage[] = [
 
 const developers: Developer[] = [
     {
-        name: "Prabakaran",
-        role: "Full Stack & UI Lead",
-        specialty: "Frontend Architecture",
-        achievement: "Crafted the immersive Box Machi Box experience",
-        techStack: ["Next.js", "React", "Tailwind", "Framer Motion"],
-        base: "Coimbatore, India",
-        coffee: "Filter Coffee",
-        favoriteDriver: "Lewis Hamilton",
-        socials: {
-            github: "https://github.com/Prabakaransr19",
-            linkedin: "https://www.linkedin.com/in/prabakaransr19/"
-        },
-        avatarColor: "bg-red-600",
-        messages: []
-    },
-    {
         name: "Sarvatharshan Shankar",
         role: "ML & Backend Lead",
         specialty: "Predictive Intelligence",
@@ -139,6 +123,22 @@ const developers: Developer[] = [
             linkedin: "https://www.linkedin.com/in/sarvatarshan20/"
         },
         avatarColor: "bg-blue-600",
+        messages: []
+    },
+    {
+        name: "Prabakaran",
+        role: "Full Stack & UI Lead",
+        specialty: "Frontend Architecture",
+        achievement: "Crafted the immersive Box Machi Box experience",
+        techStack: ["Next.js", "React", "Tailwind", "Framer Motion"],
+        base: "Coimbatore, India",
+        coffee: "Filter Coffee",
+        favoriteDriver: "Lewis Hamilton",
+        socials: {
+            github: "https://github.com/Prabakaransr19",
+            linkedin: "https://www.linkedin.com/in/prabakaransr19/"
+        },
+        avatarColor: "bg-red-600",
         messages: []
     }
 ];
@@ -297,6 +297,24 @@ export const PitCrew = () => {
                                     <div className="h-px bg-neutral-800 flex-1" />
                                     <span>Meet The Crew</span>
                                     <div className="h-px bg-neutral-800 flex-1" />
+                                </div>
+
+                                {/* Team Photo */}
+                                <div className="mb-8 rounded-xl overflow-hidden border border-neutral-800 relative group">
+                                    <div className="absolute inset-0 bg-gradient-to-t from-neutral-900 via-transparent to-transparent z-10 opacity-60"></div>
+                                    <img
+                                        src="/team-photo.png"
+                                        alt="Box Machi Box Team - Prabakaran and Sarvatharshan"
+                                        className="w-full h-64 md:h-80 object-cover object-top filter grayscale-[20%] group-hover:grayscale-0 transition-all duration-700 ease-in-out scale-100 group-hover:scale-105"
+                                    />
+                                    <div className="absolute bottom-4 left-4 z-20">
+                                        <div className="bg-red-600/90 backdrop-blur text-white text-[10px] font-bold px-2 py-0.5 rounded inline-block mb-1">
+                                            HACKFEST CCET 2K25
+                                        </div>
+                                        <div className="text-white text-sm font-bold drop-shadow-md">
+                                            Winning Methodology
+                                        </div>
+                                    </div>
                                 </div>
 
                                 {/* 2. Developer Cards */}

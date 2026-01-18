@@ -10,6 +10,9 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 export const metadata: Metadata = {
   title: "Box Machi Box | Predicting Podiums Before Lights Out",
   description: "Predicting podiums before the lights go out. Advanced F1 analysis, strategy predictions, and telemetry insights.",
+  icons: {
+    icon: "/logo.png",
+  },
   viewport: "width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes",
 };
 

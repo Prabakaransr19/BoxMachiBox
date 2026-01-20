@@ -190,16 +190,7 @@ npm start
 
 ---
 
-## 🎮 Using the Web App
 
-1. **Visit** [https://boxmachibox.vercel.app/](https://boxmachibox.vercel.app/)
-2. **Navigate** to "Predict" page
-3. **Select** qualifying grid (P1-P10 drivers)
-4. **Choose** race circuit
-5. **Click** "Predict Podium"
-6. **View** top 3 predicted finishers with probabilities
-
-**Pro Tip:** Check "Insights" page for detailed driver analysis and championship trends!
 
 ---
 

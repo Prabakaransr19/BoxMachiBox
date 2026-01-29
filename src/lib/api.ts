@@ -209,3 +209,34 @@ export async function fetchDriverProfile(driverNumber: number) {
         history
     };
 }
+
+export async function fetchWithRetry(
+    url: string,
+    options?: RequestInit,
+    maxRetries = 3
+): Promise<Response> {
+    let lastError;
+
+    for (let attempt = 0; attempt < maxRetries; attempt++) {
+        try {
+            const response = await fetch(url, {
+                ...options,
+                signal: AbortSignal.timeout(45000) // 45s timeout
+            });
+
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            return response;
+
+        } catch (error) {
+            lastError = error;
+
+            if (attempt < maxRetries - 1) {
+                // Wait 5s before retry
+                await new Promise(resolve => setTimeout(resolve, 5000));
+                console.log(`Retry attempt ${attempt + 2}/${maxRetries}...`);
+            }
+        }
+    }
+
+    throw lastError;
+}

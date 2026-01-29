@@ -5,6 +5,8 @@ import "./globals.css";
 import { Navigation } from "@/components/navigation";
 import { Header } from "@/components/header";
 
+import { ApiWarmer } from "@/components/api-warmer";
+
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
@@ -13,7 +15,13 @@ export const metadata: Metadata = {
   icons: {
     icon: "/logo.png",
   },
-  viewport: "width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes",
+};
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1.0,
+  maximumScale: 5.0,
+  userScalable: true,
 };
 
 export default function RootLayout({
@@ -24,6 +32,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} font-sans antialiased bg-bmb-bg text-bmb-text`}>
+        <ApiWarmer />
         <Header />
         <Navigation />
         {children}

@@ -5,7 +5,13 @@ import { motion } from "framer-motion";
 
 const navItems = [
     {
-        title: "Analyze",
+        title: "Race Simulation",
+        description: "Full grid prediction engine. Simulate entire race results for all 20 drivers.",
+        href: "/race-simulation",
+        gradient: "from-bmb-white to-bmb-accent-red",
+    },
+    {
+        title: "Driver Analysis",
         description: "Deep dive into telemetry, lap times, and sector performance. Get the real data, machi.",
         href: "/analyze",
         gradient: "from-bmb-white to-bmb-accent-cyan",
@@ -28,7 +34,7 @@ export const FeatureNavigation = () => {
     return (
         <section className="w-full bg-bmb-bg py-12 md:py-24 px-4 md:px-6 border-b border-neutral-900">
             <div className="max-w-7xl mx-auto">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
                     {navItems.map((item, index) => (
                         <Link key={item.title} href={item.href} className="group">
                             <motion.div

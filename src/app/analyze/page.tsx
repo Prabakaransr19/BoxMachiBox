@@ -1,4 +1,10 @@
 import { AnalysisForm } from "@/components/analysis-form";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Driver Analysis | Box Machi Box",
+    description: "Analyze F1 driver performance and predict race outcomes.",
+};
 
 export default function AnalyzePage() {
     return (

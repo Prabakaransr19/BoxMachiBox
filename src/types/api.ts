@@ -26,3 +26,36 @@ export interface ModelInfo {
     training_samples: number;
     version: string;
 }
+
+export interface GridPosition {
+    position: number;
+    driver: string;
+}
+
+export interface FullGridPredictionRequest {
+    grid: GridPosition[];
+    circuit: string;
+    weather: 'Dry' | 'Wet' | 'Mixed';
+}
+
+export interface DriverResult {
+    position: number;
+    driver: string;
+    starting_grid: number;
+    podium_probability: number;
+    confidence: 'High' | 'Medium' | 'Low';
+    expected_points: number;
+}
+
+export interface FullGridPredictionResponse {
+    predicted_results: DriverResult[];
+    podium: string[];
+    points_positions: string[];
+    fastest_lap_prediction: string;
+    dnf_predictions: string[];
+    metadata: {
+        circuit: string;
+        weather: string;
+        prediction_date: string;
+    };
+}

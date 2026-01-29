@@ -112,7 +112,7 @@ export const ScrollSequence = () => {
                         </p>
                         <Link href="/analyze" className="block w-full md:w-auto">
                             <button className="w-full md:w-auto group relative inline-flex h-12 md:h-12 items-center justify-center overflow-hidden rounded-md bg-neutral-900 px-8 py-3 font-medium text-neutral-200 transition-all duration-300 hover:bg-neutral-800 hover:text-white border border-neutral-800 hover:border-bmb-accent-cyan/50 text-sm md:text-base">
-                                <span className="mr-2">Go to Analysis</span>
+                                <span className="mr-2">Go to Driver Analysis</span>
                                 <span className="group-hover:translate-x-1 transition-transform duration-300">→</span>
                             </button>
                         </Link>

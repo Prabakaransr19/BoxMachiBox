@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { PredictionRequest, PredictionResponse } from "@/types/api";
+import { fetchWithRetry } from "@/lib/api";
+import { RaceConsoleLoading } from "./race-console-loading";
 
 const API_BASE = "https://boxmachibox.onrender.com/api";
 
@@ -89,7 +91,7 @@ export const AnalysisForm = () => {
         }
 
         try {
-            const res = await fetch(`${API_BASE}/predict`, {
+            const res = await fetchWithRetry(`${API_BASE}/predict`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData),
@@ -112,9 +114,7 @@ export const AnalysisForm = () => {
     if (isLoadingData) {
         return (
             <div className="flex flex-col items-center justify-center p-12 border border-neutral-800 rounded-xl bg-bmb-card/50 backdrop-blur-md">
-                <div className="w-12 h-12 border-4 border-neutral-800 border-t-bmb-accent-cyan rounded-full animate-spin mb-4" />
-                <p className="text-neutral-400 animate-pulse">Establishing uplink to telemetry server...</p>
-                <p className="text-xs text-neutral-600 mt-2">(Cold start may take up to 30s)</p>
+                <RaceConsoleLoading />
             </div>
         );
     }

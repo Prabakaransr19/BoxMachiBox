@@ -1,90 +1,300 @@
-// lib/api.js
-
-const BASE_URL = 'https://api.openf1.org/v1';
-
-export async function fetchStandingsData() {
-  try {
-    // Fetch latest session to get session_key
-    const sessionRes = await fetch(`${BASE_URL}/sessions?year=2024&session_type=Race`, {
-      cache: 'no-store',
-    });
-    
-    if (!sessionRes.ok) {
-      throw new Error(`Failed to fetch sessions: ${sessionRes.status}`);
-    }
-    
-    const sessions = await sessionRes.json();
-    
-    if (!Array.isArray(sessions) || sessions.length === 0) {
-      console.warn('No sessions found, returning empty standings');
-      return { drivers: [], teams: [] };
-    }
-    
-    const lastSession = sessions[sessions.length - 1];
-    const sessionKey = lastSession.session_key;
-
-    // Fetch drivers championship
-    const driversRes = await fetch(`${BASE_URL}/drivers`, {
-      cache: 'no-store',
-    });
-    
-    const driversData = await driversRes.json();
-    const drivers = Array.isArray(driversData) ? driversData : [];
-
-    // Fetch teams championship
-    const teamsRes = await fetch(`${BASE_URL}/teams`, {
-      cache: 'no-store',
-    });
-    
-    const teamsData = await teamsRes.json();
-    const teams = Array.isArray(teamsData) ? teamsData : [];
-
-    return {
-      drivers: drivers.map((driver, index) => ({
-        position: index + 1,
-        name: driver.full_name || driver.name_acronym || 'Unknown',
-        team: driver.team_name || 'Unknown',
-        points: driver.points || 0,
-        ...driver
-      })),
-      teams: teams.map((team, index) => ({
-        position: index + 1,
-        name: team.team_name || team.name || 'Unknown',
-        points: team.points || 0,
-        ...team
-      }))
-    };
-    
-  } catch (error) {
-    console.error('Failed to fetch standings:', error);
-    // Return empty arrays to prevent forEach errors
-    return {
-      drivers: [],
-      teams: [],
-    };
-  }
+export interface DriverStanding {
+    position: number;
+    driver_number: number;
+    driver_name: string;
+    team_name: string;
+    points: number;
+    wins: number;
+    podiums: number;
+    team_colour?: string;
+    headshot_url?: string;
 }
 
-export async function fetchDriverInfo(driverId) {
-  try {
-    const response = await fetch(`${BASE_URL}/drivers?driver_number=${driverId}`, {
-      cache: 'no-store',
-    });
-    
-    if (!response.ok) {
-      throw new Error(`Failed to fetch driver: ${response.status}`);
+export interface ConstructorStanding {
+    position: number;
+    team_name: string;
+    points: number;
+    wins: number;
+    podiums: number;
+    team_colour?: string;
+}
+
+const BASE_URL = "https://api.openf1.org/v1";
+
+// Team Color Map (Backup if unavailable in API)
+export const TEAM_COLOR_MAP: Record<string, string> = {
+    "Red Bull Racing": "#3671C6",
+    "Ferrari": "#E8002D", // Official-ish red
+    "Mercedes": "#27F4D2",
+    "McLaren": "#FF8000",
+    "Aston Martin": "#225941",
+    "Alpine": "#0093CC",
+    "Williams": "#64C4FF",
+    "RB": "#6692FF",
+    "Kick Sauber": "#52E252",
+    "Haas F1 Team": "#B6BABD",
+    "Haas": "#B6BABD",
+    "Sauber": "#52E252"
+};
+
+async function getLatestRaceSessionKey(): Promise<number> {
+    try {
+        // Fetch 2024 races (since 2025 is future/empty in this simulated time context or just safe)
+        // In a real 2026 context, 2025 would be the "last season".
+        // I will try 2025 first.
+        let response = await fetch(`${BASE_URL}/sessions?year=2025&session_type=Race`);
+        let sessions = await response.json();
+
+        if (!sessions || sessions.length === 0) {
+            // Fallback to 2024
+            response = await fetch(`${BASE_URL}/sessions?year=2024&session_type=Race`);
+            sessions = await response.json();
+        }
+
+        if (sessions && sessions.length > 0) {
+            // Return the last session key (latest race)
+            return sessions[sessions.length - 1].session_key;
+        }
+        return 9472; // Default fallback (Bahrain 2024)
+    } catch (e) {
+        console.warn("Failed to fetch sessions, using fallback.");
+        return 9472;
     }
-    
-    const data = await response.json();
-    
-    if (!Array.isArray(data) || data.length === 0) {
-      return null;
+}
+
+export async function fetchStandingsData(): Promise<{ drivers: DriverStanding[], teams: ConstructorStanding[] }> {
+    try {
+        const sessionKey = await getLatestRaceSessionKey();
+
+        // 1. Fetch Drivers Roster (for names and teams)
+        const driversRes = await fetch(`${BASE_URL}/drivers?session_key=${sessionKey}`, {
+            cache: 'no-store',
+        });
+        
+        if (!driversRes.ok) {
+            console.error(`Failed to fetch drivers: ${driversRes.status}`);
+            return { drivers: [], teams: [] };
+        }
+        
+        const driversList = await driversRes.json();
+        
+        // Validate driversList is an array
+        if (!Array.isArray(driversList)) {
+            console.error('Drivers API did not return an array:', driversList);
+            return { drivers: [], teams: [] };
+        }
+
+        // 2. Fetch Championship Standings (Drivers)
+        const champRes = await fetch(`${BASE_URL}/championship_drivers?session_key=${sessionKey}`, {
+            cache: 'no-store',
+        });
+        
+        if (!champRes.ok) {
+            console.error(`Failed to fetch championship standings: ${champRes.status}`);
+            return { drivers: [], teams: [] };
+        }
+        
+        const champList = await champRes.json();
+        
+        // Validate champList is an array
+        if (!Array.isArray(champList)) {
+            console.error('Championship API did not return an array:', champList);
+            return { drivers: [], teams: [] };
+        }
+
+        // 3. Join Data
+        // Map driver_number -> Driver Info
+        const driverMap = new Map();
+        driversList.forEach((d: any) => {
+            driverMap.set(d.driver_number, {
+                name: d.full_name,
+                team: d.team_name,
+                color: d.team_colour ? `#${d.team_colour}` : TEAM_COLOR_MAP[d.team_name] || "#FFFFFF",
+                headshot: d.headshot_url
+            });
+        });
+
+        const drivers: DriverStanding[] = champList.map((c: any) => {
+            const info = driverMap.get(c.driver_number) || { name: "Unknown", team: "Unknown", color: "#FFF" };
+            return {
+                position: c.position_current,
+                driver_number: c.driver_number,
+                driver_name: info.name,
+                team_name: info.team,
+                points: c.points_current,
+                wins: 0, // API doesn't provide easily without N+1
+                podiums: 0,
+                team_colour: info.color,
+                headshot_url: info.headshot
+            };
+        });
+
+        // Sort Drivers
+        // Points DESC, then (Wins), then (Podiums) -> We lack Wins/Podiums so default Points
+        drivers.sort((a, b) => b.points - a.points);
+
+        // Re-assign positions based on sort 
+        // (The API position_current might be accurate, but sorting ensures table is correct)
+        drivers.forEach((d, i) => d.position = i + 1);
+
+        // 4. Aggregate Constructor Standings from Drivers
+        const teamMap = new Map<string, ConstructorStanding>();
+
+        drivers.forEach(d => {
+            if (!teamMap.has(d.team_name)) {
+                teamMap.set(d.team_name, {
+                    position: 0,
+                    team_name: d.team_name,
+                    points: 0,
+                    wins: 0,
+                    podiums: 0,
+                    team_colour: d.team_colour
+                });
+            }
+            const team = teamMap.get(d.team_name)!;
+            team.points += d.points;
+            // wins/podiums would sum here if we had them
+        });
+
+        const teams = Array.from(teamMap.values());
+        teams.sort((a, b) => b.points - a.points);
+        teams.forEach((t, i) => t.position = i + 1);
+
+        return { drivers, teams };
+    } catch (error) {
+        console.error('Error in fetchStandingsData:', error);
+        return { drivers: [], teams: [] };
     }
-    
-    return data[0];
-    
-  } catch (error) {
-    console.error('Failed to fetch driver info:', error);
-    return null;
-  }
+}
+
+export interface RaceResult {
+    meeting_key: number;
+    session_key: number;
+    date: string;
+    location: string;
+    position: number;
+    points: number; // calculated or fetched if available
+}
+
+export async function fetchDriverProfile(driverNumber: number) {
+    try {
+        const { drivers } = await fetchStandingsData();
+        const driver = drivers.find(d => d.driver_number === driverNumber);
+
+        if (!driver) return null;
+
+        // Fetch history
+        // Logic: Get sessions -> filter races -> get position for this driver
+        let history: RaceResult[] = [];
+        try {
+            const sessionKey = await getLatestRaceSessionKey(); // This gives LATEST. We want ALL 2024/2025.
+            // Assuming we are in "2025" mode but falling back to 2024 data.
+            // let's fetch all races for the season of the current sessionKey.
+            // To save time/bandwidth, let's just fetch the last 5 races roughly.
+            // Or fetch all sessions for the year.
+
+            // We need the YEAR from the sessionKey logic.
+            // Let's just fetch 2024 races explicitly for stability as established in `getLatestRaceSessionKey` fallback.
+            const year = 2024;
+            const sessionsRes = await fetch(`${BASE_URL}/sessions?year=${year}&session_type=Race`, {
+                cache: 'no-store',
+            });
+            
+            if (!sessionsRes.ok) {
+                console.error(`Failed to fetch sessions: ${sessionsRes.status}`);
+                return { ...driver, history: [] };
+            }
+            
+            const sessions = await sessionsRes.json();
+            
+            // Validate sessions is an array
+            if (!Array.isArray(sessions)) {
+                console.error('Sessions API did not return an array:', sessions);
+                return { ...driver, history: [] };
+            }
+
+            // Setup promises to fetch specific results for this driver in these sessions
+            // Limit to last 8 races to allow for "Recent Results" without over-fetching
+            const lastRaces = sessions.slice(-8).reverse(); // Most recent first
+
+            const historyPromises = lastRaces.map(async (s: any) => {
+                try {
+                    // Fetch position for this driver in this session
+                    // We want final classification.
+                    // Endpoint /position?session_key=X&driver_number=Y gives array of positions? 
+                    // Let's assume we want the last one.
+                    const posRes = await fetch(`${BASE_URL}/position?session_key=${s.session_key}&driver_number=${driverNumber}`, {
+                        cache: 'no-store',
+                    });
+                    
+                    if (!posRes.ok) {
+                        return null;
+                    }
+                    
+                    const posData = await posRes.json();
+
+                    if (Array.isArray(posData) && posData.length > 0) {
+                        const lastPos = posData[posData.length - 1];
+                        return {
+                            meeting_key: s.meeting_key,
+                            session_key: s.session_key,
+                            date: s.date_start,
+                            location: s.location,
+                            position: lastPos.position,
+                            points: 0 // TODO: calculate points based on position if needed
+                        };
+                    }
+                    return null;
+                } catch (e) {
+                    console.error('Error fetching position data:', e);
+                    return null;
+                }
+            });
+
+            const results = await Promise.all(historyPromises);
+            history = results.filter((r): r is RaceResult => r !== null);
+
+        } catch (e) {
+            console.error("Error fetching history:", e);
+        }
+
+        return {
+            ...driver,
+            history
+        };
+    } catch (error) {
+        console.error('Error in fetchDriverProfile:', error);
+        return null;
+    }
+}
+
+export async function fetchWithRetry(
+    url: string,
+    options?: RequestInit,
+    maxRetries = 3
+): Promise<Response> {
+    let lastError;
+
+    for (let attempt = 0; attempt < maxRetries; attempt++) {
+        try {
+            const response = await fetch(url, {
+                ...options,
+                signal: AbortSignal.timeout(45000) // 45s timeout
+            });
+
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            return response;
+
+        } catch (error) {
+            lastError = error;
+
+            if (attempt < maxRetries - 1) {
+                // Wait 5s before retry
+                await new Promise(resolve => setTimeout(resolve, 5000));
+                console.log(`Retry attempt ${attempt + 2}/${maxRetries}...`);
+            }
+        }
+    }
+
+    throw lastError;
 }

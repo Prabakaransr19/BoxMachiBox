@@ -1,51 +1,90 @@
-const fetch = require('node-fetch'); // or global fetch if node 18+
+// lib/api.js
 
-async function test() {
-    try {
-        console.log("Fetching sessions...");
-        const sessionRes = await fetch("https://api.openf1.org/v1/sessions?year=2024&session_type=Race"); // Using 2024 as 2025 likely empty
-        const sessions = await sessionRes.json();
+const BASE_URL = 'https://api.openf1.org/v1';
 
-        if (sessions.length === 0) {
-            console.log("No 2024 sessions found.");
-            return;
-        }
-
-        const lastSession = sessions[sessions.length - 1]; // Last race
-        console.log("Last Session Key:", lastSession.session_key, "Location:", lastSession.location);
-
-        console.log("\nFetching Championship Drivers...");
-        // Try the search result endpoint
-        // Note: URL might need session_key
-        const champRes = await fetch(`https://api.openf1.org/v1/championship_drivers`); // Try without key first to see if it lists all
-        // If that fails or returns too much, filter
-        // Actually prompt said `?session_key=latest`.
-        // Let's try `current` endpoint logic.
-
-        const sampleText = await champRes.text();
-        try {
-            const champ = JSON.parse(sampleText);
-            console.log("Championship Drivers Record Count:", champ.length);
-            if (champ.length > 0) console.log("Sample:", champ[0]);
-        } catch (e) {
-            console.log("Failed to parse champ drivers:", sampleText.slice(0, 100));
-        }
-
-        console.log("\nFetching Championship Teams...");
-        // Guessing endpoint name based on logic
-        const constRes = await fetch(`https://api.openf1.org/v1/championship_constructors`);
-        const constText = await constRes.text();
-        try {
-            const consts = JSON.parse(constText);
-            console.log("Championship Constructors Record Count:", consts.length);
-            if (consts.length > 0) console.log("Sample:", consts[0]);
-        } catch (e) {
-            console.log("Failed to parse champ constructors:", constText.slice(0, 100));
-        }
-
-    } catch (e) {
-        console.error("Error:", e);
+export async function fetchStandingsData() {
+  try {
+    // Fetch latest session to get session_key
+    const sessionRes = await fetch(`${BASE_URL}/sessions?year=2024&session_type=Race`, {
+      cache: 'no-store',
+    });
+    
+    if (!sessionRes.ok) {
+      throw new Error(`Failed to fetch sessions: ${sessionRes.status}`);
     }
+    
+    const sessions = await sessionRes.json();
+    
+    if (!Array.isArray(sessions) || sessions.length === 0) {
+      console.warn('No sessions found, returning empty standings');
+      return { drivers: [], teams: [] };
+    }
+    
+    const lastSession = sessions[sessions.length - 1];
+    const sessionKey = lastSession.session_key;
+
+    // Fetch drivers championship
+    const driversRes = await fetch(`${BASE_URL}/drivers`, {
+      cache: 'no-store',
+    });
+    
+    const driversData = await driversRes.json();
+    const drivers = Array.isArray(driversData) ? driversData : [];
+
+    // Fetch teams championship
+    const teamsRes = await fetch(`${BASE_URL}/teams`, {
+      cache: 'no-store',
+    });
+    
+    const teamsData = await teamsRes.json();
+    const teams = Array.isArray(teamsData) ? teamsData : [];
+
+    return {
+      drivers: drivers.map((driver, index) => ({
+        position: index + 1,
+        name: driver.full_name || driver.name_acronym || 'Unknown',
+        team: driver.team_name || 'Unknown',
+        points: driver.points || 0,
+        ...driver
+      })),
+      teams: teams.map((team, index) => ({
+        position: index + 1,
+        name: team.team_name || team.name || 'Unknown',
+        points: team.points || 0,
+        ...team
+      }))
+    };
+    
+  } catch (error) {
+    console.error('Failed to fetch standings:', error);
+    // Return empty arrays to prevent forEach errors
+    return {
+      drivers: [],
+      teams: [],
+    };
+  }
 }
 
-test();
+export async function fetchDriverInfo(driverId) {
+  try {
+    const response = await fetch(`${BASE_URL}/drivers?driver_number=${driverId}`, {
+      cache: 'no-store',
+    });
+    
+    if (!response.ok) {
+      throw new Error(`Failed to fetch driver: ${response.status}`);
+    }
+    
+    const data = await response.json();
+    
+    if (!Array.isArray(data) || data.length === 0) {
+      return null;
+    }
+    
+    return data[0];
+    
+  } catch (error) {
+    console.error('Failed to fetch driver info:', error);
+    return null;
+  }
+}
